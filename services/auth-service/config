@@ -1,0 +1,4 @@
+jwt_access_token_duration: 86400000000000
+jwt_refresh_token_duration: 2592000000000000
+jwt_token_secret: FSAFASFASFAShhnhnhjjhnbnnbnhnhnhnbbnbjrgxcro676rrfc6ff6rrc6oltocfvgkcgfcfkghvfghkfk
+log_level: Info

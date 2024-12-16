@@ -1,0 +1,58 @@
+@startuml deployment
+top to bottom direction
+
+
+node "Auth" {
+    [auth-service]
+    database "Auth Postgres"
+
+    [auth-service] -> [Auth Postgres]
+}
+
+node "Nginx"
+
+together {
+    node "Storage" {
+        [storage-service]
+        database "MongoDB"
+        database "Minio"
+
+        [storage-service] --> [MongoDB]
+        [storage-service] --> [Minio]
+    }
+
+    node "Export" {
+        [export-service]
+    }
+
+    node "Albums" {
+        [album-service]
+        database "Album Postgres"
+
+        [album-service] --> [Album Postgres]
+    }
+
+    node "Search" {
+        [search-service]
+            
+        database "Search Postgres"
+        [search-service] --> [Search Postgres]
+    }
+}
+
+node "Kafka"
+
+
+HTTP -> [Nginx]
+[Nginx] -up--> [auth-service]
+[Nginx] -down--> [storage-service]
+[Nginx] -down--> [album-service]
+[Nginx] -down--> [export-service]
+[Nginx] -down--> [search-service]
+
+[export-service] -left- [storage-service] : gRPC
+[export-service] -right- [album-service] : gRPC
+
+[album-service] -down- [Kafka]
+[storage-service] -down- [Kafka]
+[search-service] -down- [Kafka]

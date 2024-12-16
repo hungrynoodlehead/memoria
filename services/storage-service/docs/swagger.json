@@ -1,0 +1,42 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Storage Microservice API",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0"
+        },
+        "version": "0.1"
+    },
+    "paths": {
+        "/photo/upload": {
+            "post": {
+                "description": "Upload a photo",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "photo"
+                ],
+                "operationId": "uploadPhoto",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of a user",
+                        "name": "user_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "photo to be uploaded",
+                        "name": "photo",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    }
+}

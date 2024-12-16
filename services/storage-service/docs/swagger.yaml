@@ -1,0 +1,28 @@
+info:
+  contact: {}
+  license:
+    name: Apache 2.0
+  title: Storage Microservice API
+  version: "0.1"
+paths:
+  /photo/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload a photo
+      operationId: uploadPhoto
+      parameters:
+      - description: id of a user
+        in: formData
+        name: user_id
+        required: true
+        type: integer
+      - description: photo to be uploaded
+        in: formData
+        name: photo
+        required: true
+        type: file
+      responses: {}
+      tags:
+      - photo
+swagger: "2.0"

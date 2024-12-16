@@ -1,0 +1,167 @@
+definitions:
+  authhandler.login.loginForm:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  authhandler.login.loginResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  authhandler.refresh.refreshForm:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  authhandler.refresh.refreshResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  authhandler.register.registerForm:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  authhandler.register.registerResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: User login form
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/authhandler.login.loginForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/authhandler.login.loginResponse'
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "401":
+          description: User with this Username and Password not found
+          schema:
+            type: string
+        "500":
+          description: Cannot generate tokens
+          schema:
+            type: string
+      tags:
+      - authentication
+  /auth/logout:
+    get:
+      description: Verify a JWT autrhorization
+      responses: {}
+      security:
+      - JWT Bearer: []
+      tags:
+      - authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Get new token pair
+      parameters:
+      - description: User registration form
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/authhandler.refresh.refreshForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/authhandler.refresh.refreshResponse'
+      tags:
+      - authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: User registration form
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/authhandler.register.registerForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/authhandler.register.registerResponse'
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "403":
+          description: User already exists
+          schema:
+            type: string
+        "500":
+          description: Cannot generate tokens
+          schema:
+            type: string
+      tags:
+      - authentication
+  /auth/verify:
+    get:
+      description: Verify a JWT autrhorization
+      responses: {}
+      security:
+      - JWT Bearer: []
+      tags:
+      - authentication
+securityDefinitions:
+  JWT Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

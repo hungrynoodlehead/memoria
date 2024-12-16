@@ -1,0 +1,23 @@
+@startuml photos_database
+
+Entity Photos {
+    *_id: uuid
+    uploadedAt: time
+    originalName: string
+    createdAt: time
+    metadata: [embedded Metadata]
+    --
+    *user_id: number <<FK to Auth.Users>>
+    *shares_ids: int[] <<FKs to Albums.Shares>>
+    *tokens_ids: int[] <<FKs to Albums.Tokens>>
+}
+
+Entity Metadata {
+    LOTS of different metadata types according to EXIF
+    --
+    See EXIF metadata reference
+}
+
+Photos ||--|| Metadata
+
+@enduml

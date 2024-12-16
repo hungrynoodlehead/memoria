@@ -1,0 +1,9 @@
+@startuml search_database
+
+Entity PhotoTable {
+    *item_id: number
+    coordinates: location
+    created_at: time
+    --
+    *photo_id: <<FK to Photos>>
+}

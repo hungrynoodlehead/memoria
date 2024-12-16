@@ -1,0 +1,42 @@
+@startuml auth_database
+
+entity User {
+    *user_id: number
+    username: string
+    email: string
+    created_at: time
+    updated_at: time
+}
+
+entity Credentials {
+    *cred_id: number
+    salt: string
+    password_hash: string
+    --
+    *user_id: number <<FK>>
+}
+
+entity Sessions {
+    *session_id: number
+    first_user_agent: string
+    current_user_agent: string
+    first_ip: string
+    current_ip: string
+    status: enum <<disabled | active | terminated>>
+    --
+    *user_id: number <<FK>>
+}
+
+entity TokenPairs {
+    *tokens_id: number
+    created_at: time
+    expire_at: time
+    valid: bool
+    --
+    *session_id: number <<FK>>
+}
+
+User ||--|| Credentials
+User ||--o{ Sessions
+Sessions ||--o{ TokenPairs
+@enduml

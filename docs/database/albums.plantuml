@@ -1,0 +1,44 @@
+@startuml album_service
+
+Entity Album {
+    *album_id: number
+    name: string
+    description: string
+    --
+    *user_id: <<FK to Auth>>
+    *thumbnail_id: <<FK to Photos>> 
+}
+
+Entity Tokens {
+    *token_id: number
+    created_at: time
+    updated_at: time
+    accessed_at: time
+    expire: time
+    status: enum <<active | terminated | expired>>
+    permissions: enum <<read | readwrite | write>>
+    --
+    *album_id: number <<FK>>
+}
+
+Entity Shares {
+    *share_id: number
+    created_at: time
+    updated_at: time
+    accessed_at: time
+    expire: time
+    status: enum <<active | terminated | expired>>
+    permissions: enum <<read | readwrite | write>>
+    --
+    *user_id: <<FK to Auth>>
+    *album_id: <<FK>>
+}
+
+Entity PhotosToAlbum {
+    *photo_id: number <<FK to Photos>>
+    *album_id: number <<FK>>
+}
+
+Album ||--o{ Tokens
+Album ||--o{ Shares
+Album ||--o{ PhotosToAlbum
