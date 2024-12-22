@@ -9,6 +9,32 @@
         "version": "0.1"
     },
     "paths": {
+        "/photo/file/{userId}/{photoId}": {
+            "get": {
+                "tags": [
+                    "photo"
+                ],
+                "summary": "Returns file from storage",
+                "operationId": "getPhotoFile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Photo UUID",
+                        "name": "photoId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/photo/upload": {
             "post": {
                 "description": "Upload a photo",
@@ -21,9 +47,9 @@
                 "operationId": "uploadPhoto",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "id of a user",
-                        "name": "user_id",
+                        "type": "string",
+                        "description": "photo data",
+                        "name": "data",
                         "in": "formData",
                         "required": true
                     },
@@ -32,6 +58,32 @@
                         "description": "photo to be uploaded",
                         "name": "photo",
                         "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/photo/{userId}/{photoId}": {
+            "delete": {
+                "tags": [
+                    "photo"
+                ],
+                "summary": "Deletes a photo",
+                "operationId": "deletePhoto",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Photo UUID",
+                        "name": "photoId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "path",
                         "required": true
                     }
                 ],

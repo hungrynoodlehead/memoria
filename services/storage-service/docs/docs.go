@@ -18,29 +18,81 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/photo/upload": {
+        "/photo_repository/file/{userId}/{photoId}": {
+            "get": {
+                "tags": [
+                    "photo_repository"
+                ],
+                "summary": "Returns file from storage",
+                "operationId": "getPhotoFile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Photo UUID",
+                        "name": "photoId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/photo_repository/upload": {
             "post": {
-                "description": "Upload a photo",
+                "description": "Upload a photo_repository",
                 "consumes": [
                     "multipart/form-data"
                 ],
                 "tags": [
-                    "photo"
+                    "photo_repository"
                 ],
                 "operationId": "uploadPhoto",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "id of a user",
-                        "name": "user_id",
+                        "type": "string",
+                        "description": "photo_repository data",
+                        "name": "data",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "file",
-                        "description": "photo to be uploaded",
-                        "name": "photo",
+                        "description": "photo_repository to be uploaded",
+                        "name": "photo_repository",
                         "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/photo_repository/{userId}/{photoId}": {
+            "delete": {
+                "tags": [
+                    "photo_repository"
+                ],
+                "summary": "Deletes a photo_repository",
+                "operationId": "deletePhoto",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Photo UUID",
+                        "name": "photoId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "path",
                         "required": true
                     }
                 ],

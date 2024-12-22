@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/hungrynoodlehead/memoria/services/storage-service/handlers/photo_handler"
+	"github.com/hungrynoodlehead/memoria/services/storage-service/repositories/photo_repository"
 	"github.com/hungrynoodlehead/memoria/services/storage-service/utils"
 	httpSwagger "github.com/swaggo/http-swagger"
 	"net/http"
@@ -12,10 +13,12 @@ import (
 
 type App struct {
 	*chi.Mux
-	Config  *utils.Config
-	Logger  *utils.Logger
-	DB      *utils.DB
-	Storage *utils.Storage
+	Config          *utils.Config
+	Logger          *utils.Logger
+	DB              *utils.DB
+	Storage         *utils.Storage
+	Producer        *utils.BrokerProducer
+	PhotoRepository *photo_repository.PhotoRepository
 }
 
 // @Title			Storage Microservice API
@@ -52,13 +55,23 @@ func main() {
 		app.Storage = storage
 	}
 
+	producer, err := utils.NewBrokerProducer(app.Logger, app.Config)
+	if err != nil {
+		panic(err)
+	} else {
+		app.Producer = producer
+	}
+
+	photoRepository := photo_repository.NewPhotoRepository(app.DB, app.Storage, app.Logger, app.Producer)
+	app.PhotoRepository = photoRepository
+
 	app.Mux = chi.NewMux()
 
 	app.Get("/swagger/*", httpSwagger.Handler(
-		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
+		httpSwagger.URL("http://localhost:8088/swagger/doc.json"),
 	))
 
-	app.Mount("/photo", photo_handler.NewPhotoHandler(app.Logger, app.DB, app.Storage, app.Config))
+	app.Mount("/photo_repository", photo_handler.NewPhotoHandler(app.Logger, app.DB, app.Storage, app.Config, app.PhotoRepository))
 
 	err = http.ListenAndServe(":"+app.Config.GetListenPort(), app)
 	if err != nil {

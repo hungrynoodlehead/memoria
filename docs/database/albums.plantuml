@@ -42,3 +42,5 @@ Entity PhotosToAlbum {
 Album ||--o{ Tokens
 Album ||--o{ Shares
 Album ||--o{ PhotosToAlbum
+
+@enduml

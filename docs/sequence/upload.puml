@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Client -> Nginx: photo upload request
+Nginx -> "Auth service": authorization
+"Auth service" --> Nginx: returns auth result
+Nginx -> "Photo service": passes photo upload
+"Photo service" -> Minio: uploads photo to bucket
+Minio --> "Photo service": returns result
+"Photo service" -> "Photo DB": creates photo db entry
+"Photo DB" --> "Photo service": returns result
+"Photo service" --> Kafka: if exists, sends message about album data
+Kafka --> "Photo service": returns result
+"Photo service" --> Nginx: returns result
+Nginx --> Client: returns result
+
+@enduml

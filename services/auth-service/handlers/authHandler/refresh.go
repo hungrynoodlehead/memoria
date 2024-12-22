@@ -43,7 +43,7 @@ func (h *AuthHandler) refresh(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if errors.Is(err, jwtutils.ErrTokenAlreadyBeenUsed) {
-			//TODO:
+			//TODO: Terminate user session
 			http.Error(w, "Token already been used", http.StatusForbidden)
 			return
 		}

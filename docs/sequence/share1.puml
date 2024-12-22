@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Client -> Nginx: sends share jwt request
+Nginx -> "Auth Service": authorization using inline share token (?)
+"Auth Service" --> "Nginx": returns share jwt token
+"Nginx" --> Client: returns result
+
+Client -> Nginx: sends view request with token
+Nginx -> "Auth Service": authorization
+"Auth Service" --> Nginx: returns result
+Nginx -> "Album Service": passes a view request
+"Album Service" --> Nginx: returns photo ids
+Nginx --> Client: returns result
+
+Client -> Nginx: sends request to get photo
+Nginx -> "Auth Service": authorization
+"Auth Service" --> Nginx: returns auth result
+Nginx -> "Photo Service": returns get request
+"Photo Service" --> Nginx: returns result
+Nginx --> Client: returns result
+@enduml

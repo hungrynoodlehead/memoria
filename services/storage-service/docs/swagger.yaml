@@ -5,24 +5,60 @@ info:
   title: Storage Microservice API
   version: "0.1"
 paths:
+  /photo/{userId}/{photoId}:
+    delete:
+      operationId: deletePhoto
+      parameters:
+      - description: Photo UUID
+        in: path
+        name: photoId
+        required: true
+        type: string
+      - description: User ID
+        in: path
+        name: userId
+        required: true
+        type: integer
+      responses: {}
+      summary: Deletes a photo_repository
+      tags:
+      - photo_repository
+  /photo/file/{userId}/{photoId}:
+    get:
+      operationId: getPhotoFile
+      parameters:
+      - description: Photo UUID
+        in: path
+        name: photoId
+        required: true
+        type: string
+      - description: User ID
+        in: path
+        name: userId
+        required: true
+        type: integer
+      responses: {}
+      summary: Returns file from storage
+      tags:
+      - photo_repository
   /photo/upload:
     post:
       consumes:
       - multipart/form-data
-      description: Upload a photo
+      description: Upload a photo_repository
       operationId: uploadPhoto
       parameters:
-      - description: id of a user
+      - description: photo_repository data
         in: formData
-        name: user_id
+        name: data
         required: true
-        type: integer
-      - description: photo to be uploaded
+        type: string
+      - description: photo_repository to be uploaded
         in: formData
-        name: photo
+        name: photo_repository
         required: true
         type: file
       responses: {}
       tags:
-      - photo
+      - photo_repository
 swagger: "2.0"

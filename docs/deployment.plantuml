@@ -1,7 +1,6 @@
 @startuml deployment
 top to bottom direction
 
-
 node "Auth" {
     [auth-service]
     database "Auth Postgres"
@@ -56,3 +55,4 @@ HTTP -> [Nginx]
 [album-service] -down- [Kafka]
 [storage-service] -down- [Kafka]
 [search-service] -down- [Kafka]
+@enduml

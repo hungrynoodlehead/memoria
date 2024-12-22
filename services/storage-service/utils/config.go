@@ -49,3 +49,5 @@ func (c *Config) GetStorageAccessKey() string {
 func (c *Config) GetStorageSecretKey() string {
 	return c.GetString("MINIO_SECRET_KEY")
 }
+
+func (c *Config) GetKafkaEndpoint() string { return c.GetString("KAFKA_ENDPOINT") }

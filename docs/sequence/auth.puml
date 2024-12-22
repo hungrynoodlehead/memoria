@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Client -> Nginx: sends request
+Nginx -> "Auth Service": sends request to authenticate
+"Auth Service" -> Database: gets session by token id
+Database --> "Auth Service": returns session info
+"Auth Service" --> Nginx: returns auth result
+Nginx -> "Endpoint Service": passes a request
+"Endpoint Service" --> Nginx: returns result
+Nginx --> Client: returns result
+@enduml

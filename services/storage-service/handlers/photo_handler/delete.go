@@ -2,22 +2,20 @@ package photo_handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/v2/mongo"
-	"io"
 	"net/http"
 	"strconv"
 )
 
-//	 @Router		/photo_repository/file/{userId}/{photoId} [get]
-//		@Id			getPhotoFile
-//		@Summary	Returns file from storage
+//	 @Router		/photo_repository/{userId}/{photoId} [delete]
+//		@Id			deletePhoto
+//		@Summary	Deletes a photo_repository
 //		@Tags		photo_repository
 //		@Param		photoId	path	string	true	"Photo UUID"
 //		@Param		userId	path	uint	true	"User ID"
-func (h *PhotoHandler) getPhotoFile(w http.ResponseWriter, r *http.Request) {
+func (h *PhotoHandler) delete(w http.ResponseWriter, r *http.Request) {
 	photoId := chi.URLParam(r, "photoId")
 	if photoId == "" {
 		http.Error(w, "photo_repository id is required", http.StatusBadRequest)
@@ -51,27 +49,17 @@ func (h *PhotoHandler) getPhotoFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if data.UserID != userId {
+	if userId != data.UserID {
 		http.Error(w, "you have not access to that photo_repository", http.StatusForbidden)
 		return
 	}
 
-	file, err := h.PhotoRepository.GetPhotoFile(photoUUID)
+	err = h.PhotoRepository.DeletePhoto(photoUUID)
 	if err != nil {
-		if errors.Is(err, mongo.ErrNoDocuments) {
-			http.Error(w, "photo_repository not found", http.StatusNotFound)
-		}
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		panic(err)
 		return
 	}
 
-	r.Header.Set("Content-Type", data.ContentType)
-	r.Header.Set("Content-Disposition", fmt.Sprintf("inline; filename='%s'", data.FileName))
-
-	defer file.Close()
-	_, err = io.Copy(w, file)
-	if err != nil {
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-		return
-	}
+	w.WriteHeader(http.StatusNoContent)
+	return
 }

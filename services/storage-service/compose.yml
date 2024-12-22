@@ -7,13 +7,14 @@ services:
       context: .
       target: dev
     ports:
-      - "8080:8080"
+      - "8088:8080"
       - "40000:40000"
     environment:
       CONFIG_MINIO_ENDPOINT: storage:9000
       CONFIG_MINIO_ACCESS_KEY: root
       CONFIG_MINIO_SECRET_KEY: password
       CONFIG_MONGODB_CONNECTION_STRING: mongodb://root:password@db:27017
+      CONFIG_KAFKA_ENDPOINT: kafka:9092
     depends_on:
       - db
       - storage

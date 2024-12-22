@@ -55,6 +55,8 @@ func (h *AuthHandler) login(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "User with this Username and Password not found", http.StatusForbidden)
 			return
 		} else {
+			//TODO: normal handler
+
 			panic(err)
 		}
 	}

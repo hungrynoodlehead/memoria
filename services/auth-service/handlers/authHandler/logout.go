@@ -45,12 +45,19 @@ func (h *AuthHandler) logout(w http.ResponseWriter, r *http.Request) {
 	err = h.DB.Find(&models.TokenPairs{}, claims.TokenID).First(&tokenPair).Error
 
 	if err != nil {
+		// TODO: Not found token error
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-	
+
 	tokenPair.Valid = false
+	session.Status = models.Terminated
 	err = h.DB.Save(&tokenPair).Error
+	if err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	err = h.DB.Save(&session).Error
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
