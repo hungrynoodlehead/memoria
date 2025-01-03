@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-//	 @Router		/photo_repository/{userId}/{photoId} [delete]
+//	 @Router		/photos/{userId}/{photoId} [delete]
 //		@Id			deletePhoto
 //		@Summary	Deletes a photo_repository
 //		@Tags		photo_repository
@@ -59,6 +59,8 @@ func (h *PhotoHandler) delete(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 		return
 	}
+
+	//TODO: NOTIFY ALBUM SERVICE
 
 	w.WriteHeader(http.StatusNoContent)
 	return

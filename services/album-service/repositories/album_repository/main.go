@@ -1,13 +1,18 @@
 package album_repository
 
-import "gorm.io/gorm"
+import (
+	"github.com/hungrynoodlehead/memoria/services/album-service/repositories/photo_repository"
+	"github.com/hungrynoodlehead/memoria/services/album-service/utils"
+)
 
 type AlbumRepository struct {
-	DB *gorm.DB
+	DB              *utils.DB
+	PhotoRepository *photo_repository.PhotoRepository
 }
 
-func NewAlbumRepository(db *gorm.DB) (*AlbumRepository, error) {
+func NewAlbumRepository(db *utils.DB, photoRepository *photo_repository.PhotoRepository) *AlbumRepository {
 	return &AlbumRepository{
-		DB: db,
-	}, nil
+		DB:              db,
+		PhotoRepository: photoRepository,
+	}
 }

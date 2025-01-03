@@ -11,7 +11,7 @@ import (
 	"strconv"
 )
 
-//	 @Router		/photo_repository/file/{userId}/{photoId} [get]
+//	 @Router		/photos/file/{userId}/{photoId} [get]
 //		@Id			getPhotoFile
 //		@Summary	Returns file from storage
 //		@Tags		photo_repository

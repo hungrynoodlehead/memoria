@@ -18,7 +18,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/photo_repository/file/{userId}/{photoId}": {
+        "/photos/file/{userId}/{photoId}": {
             "get": {
                 "tags": [
                     "photo_repository"
@@ -44,7 +44,26 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/photo_repository/upload": {
+        "/photos/get": {
+            "get": {
+                "tags": [
+                    "photo_repository"
+                ],
+                "summary": "Returns ID of all user photos",
+                "operationId": "getUserPhotos",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/photos/upload": {
             "post": {
                 "description": "Upload a photo_repository",
                 "consumes": [
@@ -73,7 +92,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/photo_repository/{userId}/{photoId}": {
+        "/photos/{userId}/{photoId}": {
             "delete": {
                 "tags": [
                     "photo_repository"

@@ -1,3 +1,7 @@
+include:
+  - ./services/storage-service/compose.yml
+  - ./services/album-service/compose.yml
+
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest

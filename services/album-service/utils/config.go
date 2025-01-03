@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/spf13/viper"
+	"strings"
 )
 
 type Config struct {
@@ -23,4 +24,9 @@ func NewConfig() (*Config, error) {
 
 func (c *Config) GetConnectonString() string {
 	return c.GetString("POSTGRES_CONNECTION_STRING")
+}
+
+func (c *Config) GetKafkaAddresses() []string {
+	p := c.GetString("KAFKA_ADDRESSES")
+	return strings.Split(p, ",")
 }

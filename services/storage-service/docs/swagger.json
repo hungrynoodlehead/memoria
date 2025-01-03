@@ -9,10 +9,10 @@
         "version": "0.1"
     },
     "paths": {
-        "/photo/file/{userId}/{photoId}": {
+        "/photos/file/{userId}/{photoId}": {
             "get": {
                 "tags": [
-                    "photo"
+                    "photo_repository"
                 ],
                 "summary": "Returns file from storage",
                 "operationId": "getPhotoFile",
@@ -35,28 +35,47 @@
                 "responses": {}
             }
         },
-        "/photo/upload": {
+        "/photos/get": {
+            "get": {
+                "tags": [
+                    "photo_repository"
+                ],
+                "summary": "Returns ID of all user photos",
+                "operationId": "getUserPhotos",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/photos/upload": {
             "post": {
-                "description": "Upload a photo",
+                "description": "Upload a photo_repository",
                 "consumes": [
                     "multipart/form-data"
                 ],
                 "tags": [
-                    "photo"
+                    "photo_repository"
                 ],
                 "operationId": "uploadPhoto",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "photo data",
+                        "description": "photo_repository data",
                         "name": "data",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "file",
-                        "description": "photo to be uploaded",
-                        "name": "photo",
+                        "description": "photo_repository to be uploaded",
+                        "name": "photo_repository",
                         "in": "formData",
                         "required": true
                     }
@@ -64,12 +83,12 @@
                 "responses": {}
             }
         },
-        "/photo/{userId}/{photoId}": {
+        "/photos/{userId}/{photoId}": {
             "delete": {
                 "tags": [
-                    "photo"
+                    "photo_repository"
                 ],
-                "summary": "Deletes a photo",
+                "summary": "Deletes a photo_repository",
                 "operationId": "deletePhoto",
                 "parameters": [
                     {

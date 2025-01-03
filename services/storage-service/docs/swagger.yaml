@@ -5,7 +5,7 @@ info:
   title: Storage Microservice API
   version: "0.1"
 paths:
-  /photo/{userId}/{photoId}:
+  /photos/{userId}/{photoId}:
     delete:
       operationId: deletePhoto
       parameters:
@@ -23,7 +23,7 @@ paths:
       summary: Deletes a photo_repository
       tags:
       - photo_repository
-  /photo/file/{userId}/{photoId}:
+  /photos/file/{userId}/{photoId}:
     get:
       operationId: getPhotoFile
       parameters:
@@ -41,7 +41,20 @@ paths:
       summary: Returns file from storage
       tags:
       - photo_repository
-  /photo/upload:
+  /photos/get:
+    get:
+      operationId: getUserPhotos
+      parameters:
+      - description: User ID
+        in: query
+        name: userId
+        required: true
+        type: integer
+      responses: {}
+      summary: Returns ID of all user photos
+      tags:
+      - photo_repository
+  /photos/upload:
     post:
       consumes:
       - multipart/form-data

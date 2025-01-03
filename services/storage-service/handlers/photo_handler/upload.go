@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-// @router			/photo_repository/upload [post]
+// @router			/photos/upload [post]
 // @id				uploadPhoto
 // @description		Upload a photo_repository
 // @tags			photo_repository

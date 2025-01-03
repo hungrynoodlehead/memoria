@@ -1,0 +1,23 @@
+services:
+  album-service:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "10800:8080"
+      - "40001:40000"
+    depends_on:
+      - kafka
+      - album-db
+    environment:
+      CONFIG_POSTGRES_CONNECTION_STRING: host=album-db port=5432 user=root password=password dbname=memoria_albums
+      CONFIG_KAFKA_ADDRESSES: kafka:9092
+
+  album-db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: memoria_albums

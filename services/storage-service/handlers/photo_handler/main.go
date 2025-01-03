@@ -21,6 +21,7 @@ func NewPhotoHandler(logger *utils.Logger, DB *utils.DB, storage *utils.Storage,
 	h.Get("/file/{userId}/{photoId}", h.getPhotoFile)
 	h.Post("/upload", h.upload)
 	h.Delete("/{userId}/{photoId}", h.delete)
+	h.Get("/get", h.getUserPhotos)
 
 	return &h
 }

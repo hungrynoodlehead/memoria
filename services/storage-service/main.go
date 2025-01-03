@@ -68,10 +68,10 @@ func main() {
 	app.Mux = chi.NewMux()
 
 	app.Get("/swagger/*", httpSwagger.Handler(
-		httpSwagger.URL("http://localhost:8088/swagger/doc.json"),
+		httpSwagger.URL("/swagger/doc.json"),
 	))
 
-	app.Mount("/photo_repository", photo_handler.NewPhotoHandler(app.Logger, app.DB, app.Storage, app.Config, app.PhotoRepository))
+	app.Mount("/photos", photo_handler.NewPhotoHandler(app.Logger, app.DB, app.Storage, app.Config, app.PhotoRepository))
 
 	err = http.ListenAndServe(":"+app.Config.GetListenPort(), app)
 	if err != nil {
