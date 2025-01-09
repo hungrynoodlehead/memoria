@@ -3,8 +3,8 @@ package album_handler
 import (
 	"errors"
 	"github.com/google/uuid"
+	"github.com/hungrynoodlehead/memoria/services/album-service/repositories/photo_repository"
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 )
 
 // @Description Create new album
@@ -44,7 +44,7 @@ func (h *AlbumHandler) createAlbum(c echo.Context) error {
 
 			photo, err := h.PhotoRepository.GetPhoto(id)
 			if err != nil {
-				if errors.Is(err, gorm.ErrRecordNotFound) {
+				if errors.Is(err, photo_repository.ErrPhotoNotFound) {
 					errorList[photoUUID] = "not found"
 					break
 				} else {

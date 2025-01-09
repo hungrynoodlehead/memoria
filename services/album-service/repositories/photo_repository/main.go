@@ -3,11 +3,13 @@ package photo_repository
 import "github.com/hungrynoodlehead/memoria/services/album-service/utils"
 
 type PhotoRepository struct {
-	DB *utils.DB
+	DB       *utils.DB
+	Producer *utils.MessageProducer
 }
 
-func NewPhotoRepository(db *utils.DB) *PhotoRepository {
+func NewPhotoRepository(db *utils.DB, producer *utils.MessageProducer) *PhotoRepository {
 	return &PhotoRepository{
-		DB: db,
+		DB:       db,
+		Producer: producer,
 	}
 }

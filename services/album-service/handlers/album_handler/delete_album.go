@@ -2,14 +2,12 @@ package album_handler
 
 import (
 	"errors"
+	"github.com/hungrynoodlehead/memoria/services/album-service/repositories/photo_repository"
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 	"net/http"
 )
 
 func (h *AlbumHandler) DeleteAlbum(c echo.Context) error {
-	// TODO: AUTH
-
 	type deleteAlbumForm struct {
 		AlbumID uint64 `param:"id"`
 		Purge   bool   `query:"purge"`
@@ -25,7 +23,7 @@ func (h *AlbumHandler) DeleteAlbum(c echo.Context) error {
 
 	album, err := h.AlbumRepository.GetByID(form.AlbumID)
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if errors.Is(err, photo_repository.ErrPhotoNotFound) {
 			return c.JSON(http.StatusNotFound, "album not found")
 		}
 		return err

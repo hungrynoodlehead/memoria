@@ -4,8 +4,9 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/hungrynoodlehead/memoria/services/album-service/models"
+	"github.com/hungrynoodlehead/memoria/services/album-service/repositories/album_repository"
+	"github.com/hungrynoodlehead/memoria/services/album-service/repositories/photo_repository"
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
@@ -41,7 +42,7 @@ func (h *AlbumHandler) addToAlbum(c echo.Context) error {
 
 	album, err := h.AlbumRepository.GetByID(albumId, "Photos")
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if errors.Is(err, album_repository.ErrAlbumNotFound) {
 			return echo.NewHTTPError(http.StatusNotFound, "album not found")
 		}
 		return err
@@ -58,7 +59,7 @@ func (h *AlbumHandler) addToAlbum(c echo.Context) error {
 		}
 		photo, err := h.PhotoRepository.GetPhoto(photoUuid)
 		if err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
+			if errors.Is(err, photo_repository.ErrPhotoNotFound) {
 				errorsList[photoId] = "photo not found"
 				continue
 			}

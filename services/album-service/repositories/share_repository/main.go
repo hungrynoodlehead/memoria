@@ -8,14 +8,14 @@ import (
 
 type ShareRepository struct {
 	DB              *utils.DB
-	Producer        *utils.Producer
+	Producer        *utils.MessageProducer
 	PhotoRepository *photo_repository.PhotoRepository
 	AlbumRepository *album_repository.AlbumRepository
 }
 
 func NewShareRepository(
 	db *utils.DB,
-	producer *utils.Producer,
+	producer *utils.MessageProducer,
 	photoRepository *photo_repository.PhotoRepository,
 	albumRepository *album_repository.AlbumRepository,
 ) *ShareRepository {

@@ -1,0 +1,78 @@
+definitions:
+  album_handler.addToAlbum.addToAlbumForm:
+    properties:
+      photos:
+        description: UUIDs of photos
+        items:
+          type: string
+        type: array
+    type: object
+  album_handler.createAlbum.createAlbumForm:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      owner_id:
+        description: 'TODO: REPLACE WITH JWT!<!<!<!<!'
+        type: integer
+      photos_id:
+        items:
+          type: string
+        type: array
+    type: object
+info:
+  contact: {}
+  license:
+    name: Apache 2.0
+  title: Memoria Albums API
+  version: "0.1"
+paths:
+  /album/{id}:
+    get:
+      description: Get album data
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+  /album/{id}/add:
+    post:
+      consumes:
+      - application/json
+      description: '"Add photos to album"'
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: JSON with array of new photos
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/album_handler.addToAlbum.addToAlbumForm'
+      produces:
+      - application/json
+      responses: {}
+  /album/create:
+    post:
+      consumes:
+      - application/json
+      description: Create new album
+      parameters:
+      - description: form to be sent
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/album_handler.createAlbum.createAlbumForm'
+      produces:
+      - application/json
+      responses: {}
+swagger: "2.0"

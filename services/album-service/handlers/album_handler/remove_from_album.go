@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/hungrynoodlehead/memoria/services/album-service/models"
+	"github.com/hungrynoodlehead/memoria/services/album-service/repositories/album_repository"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 	"net/http"
@@ -46,14 +47,14 @@ func (h *AlbumHandler) RemoveFromAlbum(c echo.Context) error {
 
 		photo, err := h.PhotoRepository.GetPhoto(photoUuid)
 		if err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
+			if errors.Is(err, album_repository.ErrAlbumNotFound) {
 				errorList[id] = "album not found"
 				continue
 			}
 			return err
 		}
 
-		newAlbum, err = h.AlbumRepository.DeleteFromAlbum(album, &photo)
+		newAlbum, err = h.AlbumRepository.DeleteFromAlbum(album, &photo, form.Purge)
 		if err != nil {
 			return err
 		}
